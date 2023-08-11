@@ -1,0 +1,22 @@
+services:
+  message-database:
+    container_name: message-postgres
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: message
+    ports:
+      - 5432:5432
+    volumes:
+      - ./storage/postgres-data:/var/lib/postgresql/data
+
+  message-cache:
+    container_name: message-redis
+    image: redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - ./storage/redis-data:/data
