@@ -20,3 +20,13 @@ services:
       - 6379:6379
     volumes:
       - ./storage/redis-data:/data
+
+  message-mq:
+    container_name: message-mq
+    image: rabbitmq:management
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./storage/mq-data:/var/lib/rabbitmq
