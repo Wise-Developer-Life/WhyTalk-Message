@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MqUtil {
-  private final RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
-  public void sendMessage(String queue, String message) {
-    rabbitTemplate.convertAndSend(queue, message);
-  }
+    public void sendMessage(String queue, String message) {
+        rabbitTemplate.convertAndSend(queue, message);
+    }
 }
