@@ -1,7 +1,6 @@
-package com.wisedevlife.whytalkmessage.dto;
+package com.wisedevlife.whytalkmessage.dto.response;
 
 import com.wisedevlife.whytalkmessage.entity.Message;
-
 import java.time.Instant;
 
 public record MessageResponse(
@@ -9,8 +8,7 @@ public record MessageResponse(
         String fromUser,
         String toUser,
         long sendDateTimestamp,
-        long readDateTimestamp
-) {
+        long readDateTimestamp) {
     public static MessageResponse toMessageResponse(Message message) {
         long sendTimeStamps = message.getSendDateTime().getEpochSecond();
         Instant readTime = message.getReadDateTime();
@@ -20,7 +18,6 @@ public record MessageResponse(
                 message.getFromUser(),
                 message.getToUser(),
                 sendTimeStamps,
-                readTimestamp
-        );
+                readTimestamp);
     }
 }
