@@ -3,7 +3,6 @@ package com.wisedevlife.whytalkmessage.dto;
 import com.wisedevlife.whytalkmessage.entity.Message;
 
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 
 public record MessageRequest(
         String content,

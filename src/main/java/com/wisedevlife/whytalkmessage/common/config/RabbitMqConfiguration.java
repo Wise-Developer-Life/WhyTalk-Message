@@ -1,4 +1,4 @@
-package com.wisedevlife.whytalkmessage.configuration;
+package com.wisedevlife.whytalkmessage.common.config;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
@@ -9,8 +9,6 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 
 @Configuration
 @EnableRabbit
