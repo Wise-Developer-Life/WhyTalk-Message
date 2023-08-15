@@ -1,4 +1,4 @@
-package com.wisedevlife.whytalkmessage.dto;
+package com.wisedevlife.whytalkmessage.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;

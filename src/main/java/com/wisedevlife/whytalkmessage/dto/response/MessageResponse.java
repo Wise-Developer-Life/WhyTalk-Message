@@ -1,4 +1,4 @@
-package com.wisedevlife.whytalkmessage.dto;
+package com.wisedevlife.whytalkmessage.dto.response;
 
 import com.wisedevlife.whytalkmessage.entity.Message;
 import java.time.Instant;

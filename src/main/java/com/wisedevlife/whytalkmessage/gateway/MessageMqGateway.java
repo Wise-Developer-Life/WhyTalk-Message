@@ -1,9 +1,9 @@
 package com.wisedevlife.whytalkmessage.gateway;
 
 import com.wisedevlife.whytalkmessage.common.constants.MqConstant;
-import com.wisedevlife.whytalkmessage.dto.MessageMqRequest;
-import com.wisedevlife.whytalkmessage.dto.MessageRequest;
 import com.wisedevlife.whytalkmessage.dto.MqMessagePayload;
+import com.wisedevlife.whytalkmessage.dto.request.MessageMqRequest;
+import com.wisedevlife.whytalkmessage.dto.request.MessageRequest;
 import com.wisedevlife.whytalkmessage.entity.Message;
 import com.wisedevlife.whytalkmessage.service.MessageService;
 import lombok.RequiredArgsConstructor;
