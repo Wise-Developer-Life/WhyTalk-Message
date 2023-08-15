@@ -5,21 +5,17 @@ import com.wisedevlife.whytalkmessage.entity.Message;
 import com.wisedevlife.whytalkmessage.repository.MessageRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class MessageService {
-    private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
-
     @NonNull
     private final MessageRepository messageRepository;
 
@@ -27,9 +23,7 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
-    public void saveMessage(MessageRequest messageRequest) {
-        Message messageSaved = messageRepository.save(messageRequest.toEntity());
-        Marker marker = MarkerFactory.getMarker("saveMessage");
-        logger.info(messageSaved.toString());
+    public Message saveMessage(MessageRequest messageRequest) {
+        return messageRepository.save(messageRequest.toEntity());
     }
 }
