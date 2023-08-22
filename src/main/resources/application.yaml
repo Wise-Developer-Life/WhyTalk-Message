@@ -24,7 +24,13 @@ spring:
         show-sql: true
         database: postgresql
     data:
-      redis:
+        mongodb:
+            host: localhost
+            port: 27017
+            database: message
+            username: test-user
+            password: test-password
+        redis:
           host: localhost
           port: 6379
           lettuce:

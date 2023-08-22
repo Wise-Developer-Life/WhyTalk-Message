@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   message-database:
     container_name: message-postgres
@@ -8,16 +9,32 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: message
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - ./storage/postgres-data:/var/lib/postgresql/data
 
+  message-mongo:
+    container_name: message-mongo
+    build:
+      context: ./tools/mongo-docker
+      dockerfile: Dockerfile
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: admin
+        MONGO_INITDB_DATABASE: message
+        MONGO_INITDB_USERNAME: test-user
+        MONGO_INITDB_PASSWORD: test-password
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./storage/mongo-data:/data/db
   message-cache:
     container_name: message-redis
     image: redis
     restart: unless-stopped
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - ./storage/redis-data:/data
 
@@ -26,7 +43,7 @@ services:
     image: rabbitmq:management
     restart: unless-stopped
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - ./storage/mq-data:/var/lib/rabbitmq
