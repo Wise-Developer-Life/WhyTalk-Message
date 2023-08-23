@@ -7,8 +7,9 @@ public record MessageResponse(
         String content,
         String fromUser,
         String toUser,
-        long sendDateTimestamp,
-        long readDateTimestamp) {
+        String chatRoomId,
+        Long sendDateTimestamp,
+        Long readDateTimestamp) {
     public static MessageResponse toMessageResponse(Message message) {
         long sendTimeStamps = message.getSendDateTime().getEpochSecond();
         Instant readTime = message.getReadDateTime();
@@ -17,6 +18,7 @@ public record MessageResponse(
                 message.getContent(),
                 message.getFromUser(),
                 message.getToUser(),
+                message.getChatRoomId(),
                 sendTimeStamps,
                 readTimestamp);
     }
