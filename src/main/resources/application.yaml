@@ -30,6 +30,7 @@ spring:
             database: message
             username: test-user
             password: test-password
+            auto-index-creation: true
         redis:
           host: localhost
           port: 6379
