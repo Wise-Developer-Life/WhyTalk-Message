@@ -26,6 +26,8 @@ public class ChatRoom {
 
     private List<String> userIds;
 
+    private Date lastMessageSentAt;
+
     @CreatedDate
     private Date createdAt;
 
