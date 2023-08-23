@@ -59,3 +59,10 @@ management:
         web:
             exposure:
                 include: '*'
+
+springdoc:
+    api-docs:
+        enabled: true
+        path: /api/docs
+    swagger-ui:
+        path: /api/swagger-ui.html
