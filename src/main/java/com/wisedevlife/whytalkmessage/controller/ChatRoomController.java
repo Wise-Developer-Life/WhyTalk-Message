@@ -24,7 +24,7 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping("/{userId}")
-    @Operation(summary = "Get paged chat rooms of a user sorted by created time in descending order")
+    @Operation(summary = "Get paged chat rooms of a user sorted by last message sent time in descending order")
     public ResponseEntity<ReturnResponse<Page<ChatRoomResponse>>> getOneToOneChatRoomsByUser(@PathVariable String userId, @RequestParam int offset, @RequestParam int limit) {
         Page<ChatRoom> chatRooms = chatRoomService.getChatRooms(userId, offset, limit);
         Page<ChatRoomResponse> response = chatRooms.map(ChatRoomResponse::toChatRoomResponse);
