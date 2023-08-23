@@ -27,6 +27,9 @@ public class Message {
     @Column(nullable = false)
     private String toUser;
 
+    @Column(nullable = false)
+    private String chatRoomId;
+
     @Column(nullable = false, columnDefinition = "TIMESTAMP")
     private Instant sendDateTime;
 
