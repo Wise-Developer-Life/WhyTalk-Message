@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface ChatRoomRepository extends MongoRepository<ChatRoom, ObjectId> {
     Page<ChatRoom> findChatRoomsByUserIdsContaining(String userId, Pageable pageable);
 
-    @Query(value = "{ userIds: { $all: [ ?0, ?1 ] } }", sort = "{ createdAt: -1 }")
+    @Query(value = "{ userIds: { $all: [ ?0, ?1 ] } }", sort = "{ lastMessageSentAt: -1 }")
     Optional<ChatRoom> findOneToOneChatRoom(String user1, String user2);
 }

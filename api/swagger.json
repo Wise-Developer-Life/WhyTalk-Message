@@ -23,7 +23,7 @@
     "/chatroom": {
       "post": {
         "tags": [
-          "Hello"
+          "Chat Room Service API"
         ],
         "summary": "Create a one-to-one chat room",
         "operationId": "createOneToOneChatRoom",
@@ -54,9 +54,9 @@
     "/chatroom/{userId}": {
       "get": {
         "tags": [
-          "Hello"
+          "Chat Room Service API"
         ],
-        "summary": "Get paged chat rooms of a user sorted by created time in descending order",
+        "summary": "Get paged chat rooms of a user sorted by last message sent time in descending order",
         "operationId": "getOneToOneChatRoomsByUser",
         "parameters": [
           {
@@ -103,7 +103,7 @@
     "/chatroom/{roomId}": {
       "delete": {
         "tags": [
-          "Hello"
+          "Chat Room Service API"
         ],
         "summary": "Delete a chat room with given room id",
         "operationId": "deleteChatRoom",
