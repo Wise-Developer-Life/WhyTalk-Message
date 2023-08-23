@@ -8,12 +8,17 @@ import com.wisedevlife.whytalkmessage.dto.response.ReturnResponse;
 import com.wisedevlife.whytalkmessage.entity.Message;
 import com.wisedevlife.whytalkmessage.service.MessageService;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Hidden
 @RestController
 @RequestMapping("/message")
+@Tag(name="Message Service API")
 @RequiredArgsConstructor
 public class MessageController {
 
@@ -22,8 +27,7 @@ public class MessageController {
     @GetMapping
     public ResponseEntity<ReturnResponse<List<MessageResponse>>> getAllMessages() {
         List<Message> messages = messageService.getMessages();
-        List<MessageResponse> response =
-                messages.stream().map(MessageResponse::toMessageResponse).toList();
+        List<MessageResponse> response = messages.stream().map(MessageResponse::toMessageResponse).toList();
         return ResponseHandler.success(response);
     }
 
