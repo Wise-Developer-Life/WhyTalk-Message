@@ -3,9 +3,12 @@ package com.wisedevlife.whytalkmessage.controller;
 import com.wisedevlife.whytalkmessage.common.helper.ResponseHandler;
 import com.wisedevlife.whytalkmessage.dto.request.OneToOneChatRoomCreationRequest;
 import com.wisedevlife.whytalkmessage.dto.response.ChatRoomResponse;
+import com.wisedevlife.whytalkmessage.dto.response.PageResponse;
 import com.wisedevlife.whytalkmessage.dto.response.ReturnResponse;
+import com.wisedevlife.whytalkmessage.dto.response.ScrollResponse;
 import com.wisedevlife.whytalkmessage.entity.ChatRoom;
 import com.wisedevlife.whytalkmessage.service.ChatRoomService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +28,12 @@ public class ChatRoomController {
 
     @GetMapping("/{userId}")
     @Operation(summary = "Get paged chat rooms of a user sorted by last message sent time in descending order")
-    public ResponseEntity<ReturnResponse<Page<ChatRoomResponse>>> getOneToOneChatRoomsByUser(@PathVariable String userId, @RequestParam int offset, @RequestParam int limit) {
-        Page<ChatRoom> chatRooms = chatRoomService.getChatRooms(userId, offset, limit);
-        Page<ChatRoomResponse> response = chatRooms.map(ChatRoomResponse::toChatRoomResponse);
-        return ResponseHandler.success(response);
+    public ResponseEntity<ReturnResponse<ScrollResponse<ChatRoomResponse>>> getOneToOneChatRoomsByUser(@PathVariable String userId, @RequestParam int offset, @RequestParam int limit) {
+        List<ChatRoom> chatRooms = chatRoomService.getChatRooms(userId, offset, limit);
+        List<ChatRoomResponse> data = chatRooms.stream().map(ChatRoomResponse::toChatRoomResponse).toList();
+        int chatRoomsCount = chatRoomService.getNumberOfChatRoomsByUserId(userId);
+        ScrollResponse<ChatRoomResponse> chatRoomScrollResponse = ScrollResponse.of(data, offset, limit, chatRoomsCount);
+        return ResponseHandler.success(chatRoomScrollResponse);
     }
 
     @PostMapping
@@ -40,8 +45,9 @@ public class ChatRoomController {
         return ResponseHandler.success(response);
     }
 
+    // TODO: fix chat room delete
     @DeleteMapping("/{roomId}")
-    @Operation(summary = "Delete a chat room with given room id")
+    @Hidden @Operation(summary = "Delete a chat room with given room id")
     public ResponseEntity<ReturnResponse<String>> deleteChatRoom(@PathVariable String roomId) {
         chatRoomService.deleteChatRoom(roomId);
         return ResponseHandler.success("Deleted");

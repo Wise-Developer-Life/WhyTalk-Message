@@ -39,9 +39,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public Page<ChatRoom> getChatRooms(String userId, int offset, int limit) {
+    public List<ChatRoom> getChatRooms(String userId, int offset, int limit) {
         //TODO: check if user exists in future after user service got implemented
-        return chatRoomRepository.findChatRoomsByUserIdsContaining(userId, PageRequest.of(offset, limit));
+        return chatRoomRepository.findLatestChatRoomsOfUserIdLimitedToWithOffset(userId, offset, limit);
+    }
+
+    @Override
+    public int getNumberOfChatRoomsByUserId(String userId) {
+        Integer count = chatRoomRepository.countChatRoomsByUserIdsContains(userId);
+        return count != null ? count : 0;
     }
 
     @Override
