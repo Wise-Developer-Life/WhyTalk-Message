@@ -4,8 +4,8 @@ import com.wisedevlife.whytalkmessage.common.helper.ResponseHandler;
 import com.wisedevlife.whytalkmessage.dto.request.MessageRequest;
 import com.wisedevlife.whytalkmessage.dto.response.MessageCreateResponse;
 import com.wisedevlife.whytalkmessage.dto.response.MessageResponse;
-import com.wisedevlife.whytalkmessage.dto.response.PageResponse;
 import com.wisedevlife.whytalkmessage.dto.response.ReturnResponse;
+import com.wisedevlife.whytalkmessage.dto.response.ScrollResponse;
 import com.wisedevlife.whytalkmessage.entity.Message;
 import com.wisedevlife.whytalkmessage.service.MessageService;
 
@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/message")
 @Tag(name="Message Service API")
@@ -27,7 +29,7 @@ public class MessageController {
 
     @Operation(summary = "Get paged messages from a chat room and sorted by created time in descending order")
     @GetMapping("/{chatRoomId}")
-    public ResponseEntity<ReturnResponse<PageResponse<MessageResponse>>> getAllMessages(
+    public ResponseEntity<ReturnResponse<ScrollResponse<MessageResponse>>> getAllMessages(
             @PathVariable String chatRoomId,
             @Parameter(description = "offsetId is the id of the anchor message")
             @RequestParam("lastMessageId") long lastMessageId,
@@ -35,9 +37,12 @@ public class MessageController {
             @RequestParam("limit") int limit
     ) {
         Page<Message> messages = messageService.getPagedMessagesByChatRoomId(chatRoomId, lastMessageId, limit);
-        // TODO: try to use modelMapper to convert between entity and dto
         Page<MessageResponse> response = messages.map(MessageResponse::toMessageResponse);
-        return ResponseHandler.success(PageResponse.of(response));
+
+        List<MessageResponse> data = response.getContent();
+        int totalElements = (int) response.getTotalElements();
+
+        return ResponseHandler.success(ScrollResponse.of(data, lastMessageId, limit, totalElements));
     }
 
     @PostMapping

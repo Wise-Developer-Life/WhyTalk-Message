@@ -3,7 +3,6 @@ package com.wisedevlife.whytalkmessage.controller;
 import com.wisedevlife.whytalkmessage.common.helper.ResponseHandler;
 import com.wisedevlife.whytalkmessage.dto.request.OneToOneChatRoomCreationRequest;
 import com.wisedevlife.whytalkmessage.dto.response.ChatRoomResponse;
-import com.wisedevlife.whytalkmessage.dto.response.PageResponse;
 import com.wisedevlife.whytalkmessage.dto.response.ReturnResponse;
 import com.wisedevlife.whytalkmessage.dto.response.ScrollResponse;
 import com.wisedevlife.whytalkmessage.entity.ChatRoom;
@@ -12,7 +11,6 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
