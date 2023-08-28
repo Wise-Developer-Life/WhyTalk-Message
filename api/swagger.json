@@ -100,17 +100,19 @@
             }
           },
           {
-            "name": "offset",
+            "name": "lastMessageId",
             "in": "query",
+            "description": "offsetId is the id of the anchor message",
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int64"
             }
           },
           {
             "name": "limit",
             "in": "query",
+            "description": "limit is the number of messages to be returned",
             "required": true,
             "schema": {
               "type": "integer",
@@ -124,7 +126,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReturnResponsePageMessageResponse"
+                  "$ref": "#/components/schemas/ReturnResponseScrollResponseMessageResponse"
                 }
               }
             }
@@ -173,38 +175,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReturnResponsePageChatRoomResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chatroom/{roomId}": {
-      "delete": {
-        "tags": [
-          "Chat Room Service API"
-        ],
-        "summary": "Delete a chat room with given room id",
-        "operationId": "deleteChatRoom",
-        "parameters": [
-          {
-            "name": "roomId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReturnResponseString"
+                  "$ref": "#/components/schemas/ReturnResponseScrollResponseChatRoomResponse"
                 }
               }
             }
@@ -325,6 +296,10 @@
       "MessageResponse": {
         "type": "object",
         "properties": {
+          "messageId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "content": {
             "type": "string"
           },
@@ -347,79 +322,55 @@
           }
         }
       },
-      "PageMessageResponse": {
+      "ReturnResponseScrollResponseMessageResponse": {
         "type": "object",
         "properties": {
-          "totalPages": {
+          "code": {
             "type": "integer",
             "format": "int32"
           },
-          "totalElements": {
+          "message": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ScrollResponseMessageResponse"
+          },
+          "time": {
             "type": "integer",
             "format": "int64"
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MessageResponse"
-            }
-          },
-          "number": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sort": {
-            "$ref": "#/components/schemas/SortObject"
-          },
-          "pageable": {
-            "$ref": "#/components/schemas/PageableObject"
-          },
-          "numberOfElements": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "empty": {
-            "type": "boolean"
           }
         }
       },
-      "PageableObject": {
+      "ScrollResponseMessageResponse": {
         "type": "object",
         "properties": {
           "offset": {
             "type": "integer",
             "format": "int64"
           },
-          "sort": {
-            "$ref": "#/components/schemas/SortObject"
-          },
-          "pageNumber": {
+          "limit": {
             "type": "integer",
             "format": "int32"
           },
-          "pageSize": {
+          "total": {
             "type": "integer",
             "format": "int32"
           },
-          "paged": {
+          "isLast": {
             "type": "boolean"
           },
-          "unpaged": {
-            "type": "boolean"
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageResponse"
+            }
           }
         }
       },
-      "ReturnResponsePageMessageResponse": {
+      "ReturnResponseScrollResponseChatRoomResponse": {
         "type": "object",
         "properties": {
           "code": {
@@ -433,7 +384,7 @@
             "type": "boolean"
           },
           "data": {
-            "$ref": "#/components/schemas/PageMessageResponse"
+            "$ref": "#/components/schemas/ScrollResponseChatRoomResponse"
           },
           "time": {
             "type": "integer",
@@ -441,107 +392,29 @@
           }
         }
       },
-      "SortObject": {
+      "ScrollResponseChatRoomResponse": {
         "type": "object",
         "properties": {
-          "empty": {
-            "type": "boolean"
-          },
-          "sorted": {
-            "type": "boolean"
-          },
-          "unsorted": {
-            "type": "boolean"
-          }
-        }
-      },
-      "PageChatRoomResponse": {
-        "type": "object",
-        "properties": {
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalElements": {
+          "offset": {
             "type": "integer",
             "format": "int64"
           },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          },
-          "size": {
+          "limit": {
             "type": "integer",
             "format": "int32"
           },
-          "content": {
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isLast": {
+            "type": "boolean"
+          },
+          "data": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ChatRoomResponse"
             }
-          },
-          "number": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sort": {
-            "$ref": "#/components/schemas/SortObject"
-          },
-          "pageable": {
-            "$ref": "#/components/schemas/PageableObject"
-          },
-          "numberOfElements": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "empty": {
-            "type": "boolean"
-          }
-        }
-      },
-      "ReturnResponsePageChatRoomResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/PageChatRoomResponse"
-          },
-          "time": {
-            "type": "integer",
-            "format": "int64"
-          }
-        }
-      },
-      "ReturnResponseString": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "type": "string"
-          },
-          "time": {
-            "type": "integer",
-            "format": "int64"
           }
         }
       }
