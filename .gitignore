@@ -1,3 +1,11 @@
+### MacOS File ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
 HELP.md
 .gradle
 build/
