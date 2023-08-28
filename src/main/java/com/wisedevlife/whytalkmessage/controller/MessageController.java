@@ -4,11 +4,13 @@ import com.wisedevlife.whytalkmessage.common.helper.ResponseHandler;
 import com.wisedevlife.whytalkmessage.dto.request.MessageRequest;
 import com.wisedevlife.whytalkmessage.dto.response.MessageCreateResponse;
 import com.wisedevlife.whytalkmessage.dto.response.MessageResponse;
+import com.wisedevlife.whytalkmessage.dto.response.PageResponse;
 import com.wisedevlife.whytalkmessage.dto.response.ReturnResponse;
 import com.wisedevlife.whytalkmessage.entity.Message;
 import com.wisedevlife.whytalkmessage.service.MessageService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,16 +27,17 @@ public class MessageController {
 
     @Operation(summary = "Get paged messages from a chat room and sorted by created time in descending order")
     @GetMapping("/{chatRoomId}")
-    public ResponseEntity<ReturnResponse<Page<MessageResponse>>> getAllMessages(
+    public ResponseEntity<ReturnResponse<PageResponse<MessageResponse>>> getAllMessages(
             @PathVariable String chatRoomId,
-            @RequestParam("offset") int offset,
+            @Parameter(description = "offsetId is the id of the anchor message")
+            @RequestParam("lastMessageId") long lastMessageId,
+            @Parameter(description = "limit is the number of messages to be returned")
             @RequestParam("limit") int limit
     ) {
-        // TODO: do not directly expose response which use Spring Data Object Page
-        Page<Message> messages = messageService.getPagedMessagesByChatRoomId(chatRoomId, offset, limit);
+        Page<Message> messages = messageService.getPagedMessagesByChatRoomId(chatRoomId, lastMessageId, limit);
         // TODO: try to use modelMapper to convert between entity and dto
         Page<MessageResponse> response = messages.map(MessageResponse::toMessageResponse);
-        return ResponseHandler.success(response);
+        return ResponseHandler.success(PageResponse.of(response));
     }
 
     @PostMapping

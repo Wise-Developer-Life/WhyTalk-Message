@@ -18,21 +18,21 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(name = "from_user", nullable = false)
     private String fromUser;
 
-    @Column(nullable = false)
+    @Column(name = "to_user", nullable = false)
     private String toUser;
 
-    @Column(nullable = false)
+    @Column(name = "chat_room_id", nullable = false)
     private String chatRoomId;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "send_time", nullable = false, columnDefinition = "TIMESTAMP")
     private Instant sendDateTime;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(name = "read_time", columnDefinition = "TIMESTAMP")
     private Instant readDateTime;
 }

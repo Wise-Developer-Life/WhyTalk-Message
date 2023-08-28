@@ -1,9 +1,13 @@
 package com.wisedevlife.whytalkmessage.dto.response;
 
 import com.wisedevlife.whytalkmessage.entity.Message;
+import lombok.Builder;
+
 import java.time.Instant;
 
+@Builder
 public record MessageResponse(
+        long messageId,
         String content,
         String fromUser,
         String toUser,
@@ -14,12 +18,14 @@ public record MessageResponse(
         long sendTimeStamps = message.getSendDateTime().getEpochSecond();
         Instant readTime = message.getReadDateTime();
         Long readTimestamp = readTime != null ? readTime.getEpochSecond() : null;
-        return new MessageResponse(
-                message.getContent(),
-                message.getFromUser(),
-                message.getToUser(),
-                message.getChatRoomId(),
-                sendTimeStamps,
-                readTimestamp);
+        return MessageResponse.builder()
+                .messageId(message.getId())
+                .chatRoomId(message.getChatRoomId())
+                .fromUser(message.getFromUser())
+                .toUser(message.getToUser())
+                .content(message.getContent())
+                .sendDateTimestamp(sendTimeStamps)
+                .readDateTimestamp(readTimestamp)
+                .build();
     }
 }
