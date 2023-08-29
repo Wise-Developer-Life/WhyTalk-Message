@@ -5,16 +5,13 @@ import com.wisedevlife.whytalkmessage.common.exception.chatroom.ChatRoomNotFound
 import com.wisedevlife.whytalkmessage.entity.ChatRoom;
 import com.wisedevlife.whytalkmessage.repository.ChatRoomRepository;
 import com.wisedevlife.whytalkmessage.service.ChatRoomService;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -31,17 +28,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         }
 
         List<String> users = List.of(user1, user2);
-        ChatRoom chatRoom = ChatRoom
-                .builder()
-                .userIds(users)
-                .build();
+        ChatRoom chatRoom = ChatRoom.builder().userIds(users).build();
         return chatRoomRepository.save(chatRoom);
     }
 
     @Override
     public List<ChatRoom> getChatRooms(String userId, int offset, int limit) {
-        //TODO: check if user exists in future after user service got implemented
-        return chatRoomRepository.findLatestChatRoomsOfUserIdLimitedToWithOffset(userId, offset, limit);
+        // TODO: check if user exists in future after user service got implemented
+        return chatRoomRepository.findLatestChatRoomsOfUserIdLimitedToWithOffset(
+                userId, offset, limit);
     }
 
     @Override

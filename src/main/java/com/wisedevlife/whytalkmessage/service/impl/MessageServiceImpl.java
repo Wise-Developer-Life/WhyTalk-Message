@@ -20,8 +20,10 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
 
     @Override
-    public Page<Message> getPagedMessagesByChatRoomId(String chatRoomId, long lastMessageId, int limit) {
-        return messageRepository.findMessagesInChatRoom(chatRoomId, lastMessageId, PageRequest.of(0, limit));
+    public Page<Message> getPagedMessagesByChatRoomId(
+            String chatRoomId, long lastMessageId, int limit) {
+        return messageRepository.findMessagesInChatRoom(
+                chatRoomId, lastMessageId, PageRequest.of(0, limit));
     }
 
     @Override

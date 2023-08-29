@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ChatRoomExceptionHandler {
     @ExceptionHandler(ChatRoomNotFoundException.class)
-    public ResponseEntity<ReturnResponse<ErrorCodeEnum>> handleChatRoomNotFoundException(ChatRoomNotFoundException e) {
+    public ResponseEntity<ReturnResponse<ErrorCodeEnum>> handleChatRoomNotFoundException(
+            ChatRoomNotFoundException e) {
         log.error("Catching ChatRoomNotFoundException: {}.", e.toString());
         return ResponseHandler.badRequest(ErrorCodeEnum.CHATROOM_NOT_FOUND_ERROR);
     }
 
     @ExceptionHandler(ChatRoomExistedException.class)
-    public ResponseEntity<ReturnResponse<ErrorCodeEnum>> handleChatRoomExistedException(ChatRoomExistedException e) {
+    public ResponseEntity<ReturnResponse<ErrorCodeEnum>> handleChatRoomExistedException(
+            ChatRoomExistedException e) {
         log.error("Catching ChatRoomExistedException: {}.", e.toString());
         return ResponseHandler.badRequest(ErrorCodeEnum.CHATROOM_EXISTED_ERROR);
     }

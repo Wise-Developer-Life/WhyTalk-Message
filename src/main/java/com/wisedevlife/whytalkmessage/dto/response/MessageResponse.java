@@ -1,9 +1,8 @@
 package com.wisedevlife.whytalkmessage.dto.response;
 
 import com.wisedevlife.whytalkmessage.entity.Message;
-import lombok.Builder;
-
 import java.time.Instant;
+import lombok.Builder;
 
 @Builder
 public record MessageResponse(
