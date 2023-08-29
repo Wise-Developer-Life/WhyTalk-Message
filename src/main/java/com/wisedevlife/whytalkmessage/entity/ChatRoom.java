@@ -1,5 +1,7 @@
 package com.wisedevlife.whytalkmessage.entity;
 
+import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,17 +12,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-import java.util.List;
-
 @Document(collection = "chat_rooms")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class ChatRoom {
-    @Id
-    private ObjectId id;
+    @Id private ObjectId id;
 
     private String name;
 
@@ -28,9 +26,7 @@ public class ChatRoom {
 
     private Date lastMessageSentAt;
 
-    @CreatedDate
-    private Date createdAt;
+    @CreatedDate private Date createdAt;
 
-    @LastModifiedDate
-    private Date updatedAt;
+    @LastModifiedDate private Date updatedAt;
 }

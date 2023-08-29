@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    @Query("SELECT m FROM Message m WHERE m.chatRoomId = :chatRoomId  AND m.id <= :lastMessageId ORDER BY m.id DESC")
+    @Query(
+            "SELECT m FROM Message m WHERE m.chatRoomId = :chatRoomId  AND m.id <= :lastMessageId"
+                    + " ORDER BY m.id DESC")
     Page<Message> findMessagesInChatRoom(String chatRoomId, long lastMessageId, Pageable pageable);
 }
