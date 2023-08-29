@@ -1,5 +1,18 @@
 version: '3.8'
 services:
+  message-service:
+    container_name: message-service
+    build:
+        context: .
+        dockerfile: Dockerfile.dev
+    environment:
+     - SPRING_PROFILES_ACTIVE=dev
+    ports:
+      - "8080:8080"
+      - "7001:7001"
+    volumes:
+      - .:/app
+
   message-database:
     container_name: message-postgres
     image: postgres
@@ -29,6 +42,7 @@ services:
       - "27017:27017"
     volumes:
       - ./storage/mongo-data:/data/db
+
   message-cache:
     container_name: message-redis
     image: redis
