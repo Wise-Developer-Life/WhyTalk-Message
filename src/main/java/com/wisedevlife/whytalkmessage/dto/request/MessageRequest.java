@@ -13,6 +13,7 @@ public record MessageRequest(
                 .fromUser(this.fromUser())
                 .toUser(this.toUser())
                 .sendDateTime(sendDateTime)
+                .chatRoomId(this.chatRoomId())
                 .build();
     }
 }
