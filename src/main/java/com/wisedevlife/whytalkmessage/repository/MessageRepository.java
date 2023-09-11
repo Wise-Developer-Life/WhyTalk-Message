@@ -13,4 +13,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
             "SELECT m FROM Message m WHERE m.chatRoomId = :chatRoomId  AND m.id <= :lastMessageId"
                     + " ORDER BY m.id DESC")
     Page<Message> findMessagesInChatRoom(String chatRoomId, long lastMessageId, Pageable pageable);
+
+    Message findFirstByChatRoomIdOrderBySendDateTimeDesc(String chatRoomId);
 }

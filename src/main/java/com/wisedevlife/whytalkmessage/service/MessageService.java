@@ -8,4 +8,6 @@ public interface MessageService {
     Page<Message> getPagedMessagesByChatRoomId(String chatRoomId, long lastMessageId, int limit);
 
     Message saveMessage(MessageRequest messageRequest);
+
+    Message getLastMessageFromChatRoom(String chatRoomId);
 }

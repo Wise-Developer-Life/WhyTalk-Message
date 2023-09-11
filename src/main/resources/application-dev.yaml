@@ -5,7 +5,7 @@ spring:
         name: whytalk-message
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://message-postgres:5432/message
+        url: jdbc:postgresql://localhost:5432/message
         username: root
         password: admin
         hikari:
@@ -25,14 +25,14 @@ spring:
         database: postgresql
     data:
         mongodb:
-            host: message-mongo
+            host: localhost
             port: 27017
             database: message
             username: test-user
             password: test-password
             auto-index-creation: true
         redis:
-          host: message-redis
+          host: localhost
           port: 6379
           lettuce:
               pool:
@@ -41,7 +41,7 @@ spring:
                   max-wait: -1ms
                   max-active: 8
     rabbitmq:
-        host: message-mq
+        host: localhost
         port: 5672
     activemq:
         user: guest

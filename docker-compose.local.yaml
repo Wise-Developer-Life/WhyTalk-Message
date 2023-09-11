@@ -1,18 +1,5 @@
 version: '3.8'
 services:
-  message-service:
-    container_name: message-service
-    build:
-        context: .
-        dockerfile: dev.dockerfile
-    environment:
-     - SPRING_PROFILES_ACTIVE=dev
-    ports:
-      - "8080:8080"
-      - "7001:7001"
-    volumes:
-      - .:/app
-
   message-database:
     container_name: message-postgres
     image: postgres
@@ -32,11 +19,11 @@ services:
       context: ./tools/mongo-docker
       dockerfile: Dockerfile
     environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: admin
-        MONGO_INITDB_DATABASE: message
-        MONGO_INITDB_USERNAME: test-user
-        MONGO_INITDB_PASSWORD: test-password
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: message
+      MONGO_INITDB_USERNAME: test-user
+      MONGO_INITDB_PASSWORD: test-password
     restart: unless-stopped
     ports:
       - "27017:27017"

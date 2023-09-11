@@ -3,9 +3,11 @@ package com.wisedevlife.whytalkmessage.controller;
 import com.wisedevlife.whytalkmessage.common.helper.ResponseHandler;
 import com.wisedevlife.whytalkmessage.dto.request.OneToOneChatRoomCreationRequest;
 import com.wisedevlife.whytalkmessage.dto.response.ChatRoomResponse;
+import com.wisedevlife.whytalkmessage.dto.response.OneToOneChatRoomResponse;
 import com.wisedevlife.whytalkmessage.dto.response.ReturnResponse;
 import com.wisedevlife.whytalkmessage.dto.response.ScrollResponse;
 import com.wisedevlife.whytalkmessage.entity.ChatRoom;
+import com.wisedevlife.whytalkmessage.model.OneToOneChatRoomModel;
 import com.wisedevlife.whytalkmessage.service.ChatRoomService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,16 +30,18 @@ public class ChatRoomController {
             summary =
                     "Get paged chat rooms of a user sorted by last message sent time in descending"
                             + " order")
-    public ResponseEntity<ReturnResponse<ScrollResponse<ChatRoomResponse>>>
+    public ResponseEntity<ReturnResponse<ScrollResponse<OneToOneChatRoomResponse>>>
             getOneToOneChatRoomsByUser(
                     @PathVariable String userId,
                     @RequestParam int offset,
                     @RequestParam int limit) {
-        List<ChatRoom> chatRooms = chatRoomService.getChatRooms(userId, offset, limit);
-        List<ChatRoomResponse> data =
-                chatRooms.stream().map(ChatRoomResponse::toChatRoomResponse).toList();
+        List<OneToOneChatRoomModel> chatRooms = chatRoomService.getChatRooms(userId, offset, limit);
+        List<OneToOneChatRoomResponse> data =
+                chatRooms.stream().map(OneToOneChatRoomResponse::of).toList();
+
+        // FIXME: optimize query here
         int chatRoomsCount = chatRoomService.getNumberOfChatRoomsByUserId(userId);
-        ScrollResponse<ChatRoomResponse> chatRoomScrollResponse =
+        ScrollResponse<OneToOneChatRoomResponse> chatRoomScrollResponse =
                 ScrollResponse.of(data, offset, limit, chatRoomsCount);
         return ResponseHandler.success(chatRoomScrollResponse);
     }
@@ -49,7 +53,7 @@ public class ChatRoomController {
         List<String> users =
                 List.of(chatRoomCreationRequest.user1(), chatRoomCreationRequest.user2());
         ChatRoom createdRoom = chatRoomService.createOneToOneChatRoom(users.get(0), users.get(1));
-        ChatRoomResponse response = ChatRoomResponse.toChatRoomResponse(createdRoom);
+        ChatRoomResponse response = ChatRoomResponse.of(createdRoom);
         return ResponseHandler.success(response);
     }
 

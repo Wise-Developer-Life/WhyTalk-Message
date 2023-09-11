@@ -1,4 +1,4 @@
-package com.wisedevlife.whytalkmessage.service.impl;
+package com.wisedevlife.whytalkmessage.service.implement;
 
 import com.wisedevlife.whytalkmessage.dto.request.MessageRequest;
 import com.wisedevlife.whytalkmessage.entity.Message;
@@ -29,5 +29,12 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message saveMessage(MessageRequest messageRequest) {
         return messageRepository.save(messageRequest.toEntity());
+    }
+
+    @Override
+    public Message getLastMessageFromChatRoom(String chatRoomId) {
+        Message lastMessage =
+                messageRepository.findFirstByChatRoomIdOrderBySendDateTimeDesc(chatRoomId);
+        return lastMessage;
     }
 }
